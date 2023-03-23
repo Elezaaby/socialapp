@@ -1,0 +1,8 @@
+@import '../../App.scss';
+
+.navbar {
+  @include themify($themes) {
+    color: themed('textColor');
+    background-color: themed('bg');
+  }
+}
