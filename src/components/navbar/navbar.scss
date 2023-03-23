@@ -2,7 +2,76 @@
 
 .navbar {
   @include themify($themes) {
-    color: themed('textColor');
+    height: 50px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: themed('bg');
+    border-bottom: 1px solid themed('border');
+    color: themed('textColor');
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      svg {
+        cursor: pointer;
+      }
+
+      span {
+        font-weight: bold;
+        font-size: 20px;
+        color: themed("logo");
+
+      }
+
+      .search {
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        border: 1px solid themed('border');
+        padding: 5px;
+        gap: 10px;
+
+
+        input {
+          border: none;
+          width: 500px;
+          outline: none;
+          background-color: transparent;
+          color: themed("textColor");
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      svg {
+        cursor: pointer;
+      }
+
+      .user_info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        cursor: pointer;
+
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
   }
 }
