@@ -1,0 +1,90 @@
+@import '../../App.scss';
+
+.addPost {
+  @include themify($themes) {
+    padding: 20px;
+    background-color: themed("bg");
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+
+    .top {
+      display: flex;
+      gap: 10px;
+      padding-bottom: 25px;
+      align-items: center;
+      border-bottom: 1px solid themed("border");
+
+
+      .user {
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .inputP {
+        width: 100%;
+
+        input {
+          width: 90%;
+          border: none;
+          background-color: transparent;
+          padding: 10px 15px;
+          outline: none;
+          color: themed("textColor");
+          font-size: 14px;
+
+          &::placeholder {
+            font-size: 14px;
+            color: themed("textColorSoft");
+          }
+        }
+      }
+    }
+
+    .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+
+
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+
+          img {
+            width: 25px;
+          }
+
+          span {
+            font-size: 14px;
+            color: themed("textColorSoft");
+          }
+        }
+      }
+
+      button {
+        padding: 8px;
+        background-color: #5271ff;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+}
