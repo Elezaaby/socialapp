@@ -6,6 +6,7 @@ import Register from './components/register/Register';
 import { AuthContext } from './context/authContext';
 import Layout from './Layout';
 import Home from './components/Home/Home';
+import Profile from './components/profile/Profile';
 
 const App = () => {
   const { userData } = useContext(AuthContext)
@@ -27,6 +28,9 @@ const App = () => {
 
         <Route path='socialapp' element={<ProtectedRoute><Layout /></ProtectedRoute>} >
           <Route path='home' element={<Home />} />
+          <Route path='profile' element={<Profile />}>
+            <Route path=':usrId' element={<Profile />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

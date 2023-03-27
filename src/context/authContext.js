@@ -12,7 +12,8 @@ export const AuthContextProvider = ({ children }) => {
     setUserData({
       id: 232,
       name: 'Adel ali',
-      profileImg: 'https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600'
+      profileImg: 'https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      coverImg: 'https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
     });
   }
 
