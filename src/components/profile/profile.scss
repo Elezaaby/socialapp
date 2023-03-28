@@ -30,6 +30,14 @@
     .profile_container {
       padding: 20px 70px;
 
+      @include mobile {
+        padding: 10px;
+      }
+
+      @include tablet {
+        padding: 20px;
+      }
+
       .user_profile_info {
         height: 180px;
         border-radius: 20px;
@@ -44,10 +52,25 @@
         -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
         box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
 
+        @include mobile {
+          flex-direction: column;
+          height: 30vh;
+          padding: 20px;
+          margin-top: 100px;
+        }
+
         .left {
           flex: 1;
           display: flex;
           gap: 10px;
+
+          @include tablet {
+            flex-wrap: wrap;
+          }
+
+          @include mobile {
+            flex: 0;
+          }
 
           a {
             color: themed('textColorSoft');
@@ -86,6 +109,16 @@
 
               span {
                 font-size: 12px;
+
+                @include tablet {
+                  font-size: 10px;
+                }
+              }
+
+              svg {
+                @include tablet {
+                  font-size: 20px;
+                }
               }
             }
           }

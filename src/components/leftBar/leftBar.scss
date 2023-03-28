@@ -16,6 +16,10 @@
       display: none;
     }
 
+    @include mobile {
+      display: none;
+    }
+
 
     .container {
       padding: 20px;
@@ -49,10 +53,19 @@
             height: 30px;
             border-radius: 50%;
             object-fit: cover;
+
+            @include tablet {
+              width: 25px;
+              height: 25px;
+            }
           }
 
           span {
             font-size: 14px;
+
+            @include tablet {
+              font-size: 12px;
+            }
           }
         }
 
@@ -64,10 +77,18 @@
 
           img {
             width: 30px;
+
+            @include tablet {
+              width: 25px;
+            }
           }
 
           span {
             font-size: 14px;
+
+            @include tablet {
+              font-size: 12px;
+            }
           }
         }
       }
