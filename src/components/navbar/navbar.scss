@@ -70,6 +70,11 @@
         cursor: pointer;
       }
 
+      a {
+        text-decoration: none;
+        color: themed('textColor');
+      }
+
       .user_info {
         display: flex;
         align-items: center;
@@ -87,6 +92,14 @@
           border-radius: 50%;
           object-fit: cover;
         }
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        background-color: #f0544f;
+        color: #fff;
+        cursor: pointer;
       }
     }
   }

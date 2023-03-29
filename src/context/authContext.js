@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { addDoc, collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db, auth, onAuthStateChanged } from '../firebase'
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 export const AuthContext = createContext();
 
@@ -13,7 +13,22 @@ export const AuthContextProvider = ({ children }) => {
   let navigate = useNavigate()
 
 
+  /////////// function login with email and password
+  const loginWithEmailAndPassword = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('login done');
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
 
+  /////////// function logOut
+  const logOutUser = async () => {
+    await signOut(auth)
+  }
+
+  /////////// function register with email and password
   const registerWithEmailAndPassword = async (name, email, password, userName) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -65,7 +80,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ userData, registerWithEmailAndPassword }}>
+    <AuthContext.Provider value={{ userData, loginWithEmailAndPassword, registerWithEmailAndPassword, logOutUser }}>
       {children}
     </AuthContext.Provider>
   )

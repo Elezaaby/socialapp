@@ -15,7 +15,7 @@ import { ModeContext } from '../../context/modeContext';
 
 const Navbar = () => {
 
-  const { userData } = useContext(AuthContext)
+  const { userData, logOutUser } = useContext(AuthContext)
   const { toggle, pageMode } = useContext(ModeContext)
 
 
@@ -41,10 +41,13 @@ const Navbar = () => {
         <PersonOutlinedIcon />
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
-        <div className="user_info">
-          <img src={userData.profileImg} alt="" />
-          <span>{userData.name}</span>
-        </div>
+        <Link to={`/socialapp/profile/${userData.uid}`}>
+          <div className="user_info">
+            <img src={userData.profileImg} alt="" />
+            <span>{userData.name}</span>
+          </div>
+        </Link>
+        <button onClick={logOutUser}>logOut</button>
       </div>
     </div>
   )

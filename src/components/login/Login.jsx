@@ -1,18 +1,38 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './login.scss'
 import { AuthContext } from './../../context/authContext';
+import { auth, onAuthStateChanged } from '../../firebase'
 
 const Login = () => {
 
-  const { login } = useContext(AuthContext)
+  const [inputValue, setInputValue] = useState({
+    email: '',
+    password: ''
+  })
+  const { loginWithEmailAndPassword } = useContext(AuthContext)
   let navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    login();
-    navigate('/socialapp/home')
+    if (inputValue) {
+      loginWithEmailAndPassword(inputValue.email, inputValue.password)
+    }
   };
+
+  const getInputValue = (e) => {
+    let value = { ...inputValue }
+    value[e.target.name] = e.target.value
+    setInputValue(value)
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate('/socialapp/home')
+      }
+    })
+  }, [navigate])
 
 
   return (
@@ -28,9 +48,10 @@ const Login = () => {
         </div>
         <div className="right">
           <h1>Login</h1>
-          <form onSubmit={handleLogin}>
-            <input type="text" placeholder='Username' />
-            <input type="password" placeholder='Password' />
+          <p>Log in with<br />email: socialapp@gmail.com<br />passeord: socialapp123<br />for experience</p>
+          <form onSubmit={handleSubmit}>
+            <input onChange={getInputValue} name='email' type="email" placeholder='email' />
+            <input onChange={getInputValue} name='password' type="password" placeholder='Password' />
             <button type='submit'>Login</button>
           </form>
         </div>
