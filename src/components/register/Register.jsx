@@ -1,8 +1,46 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './register.scss'
+import { AuthContext } from './../../context/authContext';
+import { auth, onAuthStateChanged } from '../../firebase'
+
 
 const Register = () => {
+
+  const { registerWithEmailAndPassword } = useContext(AuthContext)
+  let navigate = useNavigate()
+  const [inputValue, setInputValue] = useState({
+    email: '',
+    password: '',
+    userName: '',
+    name: '',
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (inputValue) {
+      registerWithEmailAndPassword(inputValue.name, inputValue.email, inputValue.password, inputValue.userName)
+    }
+  };
+
+  const getInputValue = (e) => {
+    let value = { ...inputValue }
+    value[e.target.name] = e.target.value
+    setInputValue(value)
+    console.log(inputValue)
+  }
+
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+        navigate('/socialapp/home')
+      }
+    })
+  }, [navigate])
+  
+
   return (
     <div className='register'>
       <div className="card">
@@ -16,14 +54,12 @@ const Register = () => {
         </div>
         <div className="right">
           <h1>Register</h1>
-          <form>
-            <input type="text" placeholder='Username' />
-            <input type="email" placeholder='Email' />
-            <input type="password" placeholder='Password' />
-            <input type="text" placeholder='Name' />
-            <Link to='register'>
-              <button>Register</button>
-            </Link>
+          <form onSubmit={handleSubmit}>
+            <input onChange={getInputValue} type="text" name='userName' placeholder='Username' />
+            <input onChange={getInputValue} type="email" name='email' placeholder='Email' />
+            <input onChange={getInputValue} type="password" name='password' placeholder='Password' />
+            <input onChange={getInputValue} type="text" name='name' placeholder='Name' />
+            <button type='submit'>Register</button>
           </form>
         </div>
       </div>

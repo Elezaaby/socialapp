@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.scss'
 import Login from './components/login/Login';
 import Register from './components/register/Register';
@@ -12,28 +12,22 @@ const App = () => {
   const { userData } = useContext(AuthContext)
 
 
-  const ProtectedRoute = ({ children }) => {
-    if (!userData) {
-      return <Navigate to='/socialapp/login' />
-    }
-
-    return children
-  }
 
   return (
-    <BrowserRouter>
+    <>
       <Routes>
         <Route path='socialapp/register' element={<Register />} />
         <Route path='socialapp/login' element={<Login />} />
-
-        <Route path='socialapp' element={<ProtectedRoute><Layout /></ProtectedRoute>} >
-          <Route path='home' element={<Home />} />
-          <Route path='profile' element={<Profile />}>
-            <Route path=':usrId' element={<Profile />} />
+        {userData ?
+          <Route path='socialapp' element={<Layout />} >
+            <Route path='home' element={<Home />} />
+            <Route path='profile' element={<Profile />}>
+              <Route path=':usrId' element={<Profile />} />
+            </Route>
           </Route>
-        </Route>
+          : ''}
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 
