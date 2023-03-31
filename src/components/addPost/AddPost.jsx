@@ -1,24 +1,19 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useReducer, useRef, useEffect } from 'react'
+import React, { useContext, useRef, useEffect } from 'react'
 import './addPost.scss'
 import { AuthContext } from '../../context/authContext'
-import { PostsReducer, postActions, postsStates, } from "../../context/PostReducer";
+import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { PostsContext } from '../../context/postsContext';
 import Friends from "../../assets/friend.png";
 import AddImg from "../../assets/img.png";
 import Map from "../../assets/map.png";
-import { collection, doc, serverTimestamp, setDoc, query, onSnapshot } from 'firebase/firestore';
-import { db } from '../../firebase';
-import { orderBy } from 'firebase/firestore';
 
 
 const AddPost = () => {
   const { userData, user } = useContext(AuthContext)
+  const { getPosts } = useContext(PostsContext)
   const postRef = doc(collection(db, "posts"));
-  const collectionRef = collection(db, "posts");
   const document = postRef.id;
-  const [state, dispatch] = useReducer(PostsReducer, postsStates);
-  const { SUBMIT_POST, HANDLE_ERROR } = postActions;
   const inputText = useRef("");
 
 
@@ -38,26 +33,15 @@ const AddPost = () => {
         });
         inputText.current.value = "";
       } catch (err) {
-        dispatch({ type: HANDLE_ERROR });
         console.log(err.message);
       }
-    } else {
-      dispatch({ type: HANDLE_ERROR });
     }
   };
 
   useEffect(() => {
-    const postData = async () => {
-      const q = query(collectionRef, orderBy("timestamp", "asc"));
-      await onSnapshot(q, (doc) => {
-        dispatch({
-          type: SUBMIT_POST,
-          posts: doc?.docs?.map((item) => item?.data()),
-        });
-      });
-    };
-    return () => postData();
-  }, [SUBMIT_POST]);
+    getPosts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   return (
