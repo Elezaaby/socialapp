@@ -24,7 +24,7 @@ const Post = ({ post }) => {
               <Link to={`/socialapp/profile/${post.userId}`}>
                 <span>{post.name}</span>
               </Link>
-              <span>1 min ago</span>
+              <span>{new Date(post?.timestamp?.toDate())?.toUTCString()}</span>
             </div>
           </div>
           <MoreHorizIcon />
