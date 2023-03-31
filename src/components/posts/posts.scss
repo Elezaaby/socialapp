@@ -15,6 +15,7 @@
       border-radius: 20px;
       background-color: themed("bg");
       color: themed("textColor");
+      max-width: 840px;
 
 
       .container {
@@ -63,6 +64,7 @@
 
         .content {
           margin: 20px 0px;
+          overflow: hidden;
 
           p {
             @include mobile {
