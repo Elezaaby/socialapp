@@ -25,7 +25,9 @@ const Navbar = () => {
         <Link to="/socialapp/home" style={{ textDecoration: "none" }}>
           <span>SocialApp</span>
         </Link>
-        <HomeOutlinedIcon />
+        <Link to="/socialapp/home" >
+          <HomeOutlinedIcon />
+        </Link>
         {pageMode ? (
           <WbSunnyOutlinedIcon onClick={toggle} />
         ) : (
@@ -38,7 +40,9 @@ const Navbar = () => {
         </div>
       </div>
       <div className="right">
-        <PersonOutlinedIcon />
+        <Link to={`/socialapp/profile/${userData.uid}`}>
+          <PersonOutlinedIcon />
+        </Link>
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
         <Link to={`/socialapp/profile/${userData.uid}`}>

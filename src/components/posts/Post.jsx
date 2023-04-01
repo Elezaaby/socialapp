@@ -17,7 +17,7 @@ const Post = ({ post }) => {
       <div className="container">
         <div className="user">
           <div className="user_info">
-            <Link to={`/socialapp/profile/${post.userId}`}>
+            <Link to={`/socialapp/profile/${post.uid}`}>
               <img src={post.profilePic} alt="" />
             </Link>
             <div className="details">

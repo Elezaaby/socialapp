@@ -16,6 +16,7 @@ import Messages from "../../assets/messages.png";
 import Tutorials from "../../assets/tutorials.png";
 import Courses from "../../assets/courses.png";
 import Fund from "../../assets/fundraiser.png";
+import { Link } from 'react-router-dom';
 
 const LeftBar = () => {
   const { userData } = useContext(AuthContext)
@@ -24,10 +25,10 @@ const LeftBar = () => {
     <div className='leftBar'>
       <div className="container">
         <div className="menu">
-          <div className="user_info">
+          <Link to={`/socialapp/profile/${userData.uid}`} className="user_info">
             <img src={userData.profileImg} alt="" />
             <span>{userData.name}</span>
-          </div>
+          </Link>
           <div className="item">
             <img src={Friends} alt="" />
             <span>Friends</span>
@@ -90,7 +91,7 @@ const LeftBar = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

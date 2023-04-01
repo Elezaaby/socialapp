@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './profile.scss'
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -8,23 +8,44 @@ import PlaceIcon from "@mui/icons-material/Place";
 import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { AuthContext } from './../../context/authContext';
-import { Link } from 'react-router-dom';
-import Posts from './../posts/Posts';
+import { Link, useParams } from 'react-router-dom';
+import Post from './../posts/Post';
+import { useState } from 'react';
+import { collection, where, query, onSnapshot, orderBy } from "firebase/firestore";
+import { db } from '../../firebase';
+
 
 const Profile = () => {
 
-  const { userData } = useContext(AuthContext)
+  const { usrId } = useParams();
+  const [profileData, setProfileData] = useState(null);
+  const [postsUoser, setPostsUoser] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ behavior: 'smooth', top: 0 })
-  }, [])
+
+    const getUserProfile = async () => {
+      const q = query(collection(db, "users"), where("uid", "==", usrId));
+      await onSnapshot(q, (doc) => {
+        setProfileData(doc.docs[0].data());
+      });
+    };
+
+    const getPostsUser = async () => {
+      const q = query(collection(db, "posts"), orderBy("timestamp", "asc"), where("uid", "==", usrId));
+      await onSnapshot(q, (doc) => {
+        setPostsUoser(doc?.docs?.map((item) => item?.data()).reverse());
+      });
+    };
+    getUserProfile();
+    getPostsUser()
+  }, [usrId])
 
   return (
     <div className='profile'>
       <div className="images">
-        <img src={userData.coverImg} alt="" className="cover" />
-        <img src={userData.profileImg} alt="" className="profile_img" />
+        <img src={profileData?.coverImg} alt="" className="cover" />
+        <img src={profileData?.profileImg} alt="" className="profile_img" />
       </div>
       <div className="profile_container">
         <div className="user_profile_info">
@@ -43,7 +64,7 @@ const Profile = () => {
             </Link>
           </div>
           <div className="center">
-            <span>{userData.name}</span>
+            <span>{profileData?.name}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
@@ -51,7 +72,7 @@ const Profile = () => {
               </div>
               <div className="item">
                 <LanguageIcon />
-                <span>socialapp.dev</span>
+                <span>{profileData?.userName}</span>
               </div>
             </div>
             <button>follow</button>
@@ -61,8 +82,12 @@ const Profile = () => {
             <MoreVertIcon />
           </div>
         </div>
-        
-        <Posts />
+
+        <div className='posts'>
+          {postsUoser?.map((post, ke) => (
+            <Post post={post} key={ke} />
+          ))}
+        </div>
 
       </div>
     </div>
