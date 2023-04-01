@@ -25,6 +25,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          position: relative;
 
           .user_info {
             display: flex;
@@ -54,6 +55,36 @@
               span {
                 font-size: 12px;
               }
+            }
+          }
+
+          .drop_delete_update {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 30px;
+            right: -10px;
+            background-color: themed("bgSoft");
+
+            button {
+              border: none;
+              padding: 10px;
+              border-radius: 5px;
+              background-color: themed("bg");
+              color: themed("textColor");
+              transition: all 0.5s;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #5271ff;
+              }
+
+              &:hover:first-child {
+                background-color: #f0544f;
+              }
+
             }
           }
 
