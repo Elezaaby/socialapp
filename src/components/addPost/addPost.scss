@@ -11,41 +11,60 @@
     box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
 
     .top {
-      display: flex;
-      gap: 10px;
-      padding-bottom: 25px;
-      align-items: center;
-      border-bottom: 1px solid themed("border");
 
+      .input {
+        display: flex;
+        gap: 10px;
+        padding-bottom: 25px;
+        align-items: center;
+        border-bottom: 1px solid themed("border");
 
-      .user {
+        .user {
 
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          object-fit: cover;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
         }
-      }
 
-      .inputP {
-        width: 100%;
+        .inputP {
+          width: 100%;
 
-        input {
-          width: 90%;
-          border: none;
-          background-color: transparent;
-          padding: 10px 15px;
-          outline: none;
-          color: themed("textColor");
-          font-size: 14px;
-
-          &::placeholder {
+          input {
+            width: 90%;
+            border: none;
+            background-color: transparent;
+            padding: 10px 15px;
+            outline: none;
+            color: themed("textColor");
             font-size: 14px;
-            color: themed("textColorSoft");
+
+            &::placeholder {
+              font-size: 14px;
+              color: themed("textColorSoft");
+            }
           }
         }
       }
+
+      .uplodImg {
+        display: block;
+        width: 100%;
+
+        img {
+          width: 100%;
+          object-fit: cover;
+          max-height: 500px;
+        }
+      }
+
+    }
+
+    .progressBar {
+      height: 3px;
+      background-color: #5271ff;
     }
 
     .bottom {
@@ -53,6 +72,7 @@
       align-items: center;
       justify-content: space-between;
       padding-top: 20px;
+
 
 
       .menu {
@@ -70,9 +90,11 @@
             width: 25px;
           }
 
+          label,
           span {
             font-size: 14px;
             color: themed("textColorSoft");
+            cursor: pointer;
           }
         }
       }

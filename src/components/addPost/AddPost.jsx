@@ -2,6 +2,7 @@ import React, { useContext, useRef, useEffect } from 'react'
 import './addPost.scss'
 import { AuthContext } from '../../context/authContext'
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../../firebase';
 import { PostsContext } from '../../context/postsContext';
 import Friends from "../../assets/friend.png";
@@ -11,8 +12,9 @@ import Map from "../../assets/map.png";
 
 const AddPost = () => {
   const { userData, user } = useContext(AuthContext)
-  const { getPosts } = useContext(PostsContext)
+  const { getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage } = useContext(PostsContext)
   const postRef = doc(collection(db, "posts"));
+  const storage = getStorage();
   const document = postRef.id;
   const inputText = useRef("");
 
@@ -28,10 +30,57 @@ const AddPost = () => {
           name: user?.displayName || userData?.name,
           email: user?.email || userData?.email,
           desc: inputText.current.value,
-          // image: image,
+          img: image,
           timestamp: serverTimestamp(),
         });
         inputText.current.value = "";
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  };
+
+  const metadata = {
+    contentType: [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+      "image/svg+xml",
+    ],
+  };
+
+
+  const submitImage = async () => {
+    const fileType = imageInput && metadata.contentType.includes(imageInput["type"]);
+    if (!imageInput) return;
+    if (fileType) {
+      try {
+        const storageRef = ref(storage, `images/${imageInput.name}${userData.uid}`);
+        const uploadTask = uploadBytesResumable(
+          storageRef,
+          imageInput,
+          metadata.contentType
+        );
+        await uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgressBar(progress);
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              (downloadURL) => {
+                setImage(downloadURL);
+              }
+            );
+          }
+        );
       } catch (err) {
         console.log(err.message);
       }
@@ -43,22 +92,38 @@ const AddPost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    submitImage()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageInput?.name]);
+
 
   return (
     <div className='addPost'>
       <div className="top">
-        <div className="user">
-          <img src={userData.profileImg} alt="" />
+        <div className="input">
+          <div className="user">
+            <img src={userData.profileImg} alt="" />
+          </div>
+          <form onSubmit={handleSubmitPost} className="inputP">
+            <input ref={inputText} type="text" placeholder={`What's on your mind ${userData.name}?`} />
+          </form>
         </div>
-        <form onSubmit={handleSubmitPost} className="inputP">
-          <input ref={inputText} type="text" placeholder={`What's on your mind ${userData.name}?`} />
-        </form>
+        {image && (
+          <div className='uplodImg'>
+            <img src={image} alt="previewImage" />
+          </div>
+        )}
       </div>
+      <div className='progressBar' style={{ width: `${progressBar}%` }}></div>
       <div className="bottom">
         <div className="menu">
           <div className="item">
-            <img src={AddImg} alt="" />
-            <span>Add Image</span>
+            <input onChange={(e) => setImageInput(e.target.files[0])} id="addImage" type="file" style={{ display: "none" }} />
+            <label htmlFor="addImage">
+              <img src={AddImg} alt="" />
+            </label>
+            <label htmlFor="addImage">Add Image</label>
           </div>
           <div className="item">
             <img src={Map} alt="" />

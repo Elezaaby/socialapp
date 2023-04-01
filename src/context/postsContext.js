@@ -8,7 +8,9 @@ export const PostsContextProvider = ({ children }) => {
 
   const collectionRef = collection(db, "posts");
   const [postsArray, setPostsArray] = useState([])
-
+  const [imageInput, setImageInput] = useState(null);
+  const [progressBar, setProgressBar] = useState(100);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     getPosts()
@@ -19,13 +21,16 @@ export const PostsContextProvider = ({ children }) => {
     const q = query(collectionRef, orderBy("timestamp", "asc"));
     await onSnapshot(q, (doc) => {
       setPostsArray(doc?.docs?.map((item) => item?.data()).reverse())
+      setImage(null);
+      setImageInput(null);
+      setProgressBar(0);
     });
   };
 
 
 
   return (
-    <PostsContext.Provider value={{ postsArray, getPosts }}>
+    <PostsContext.Provider value={{ postsArray, getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage }}>
       {children}
     </PostsContext.Provider>
   )
