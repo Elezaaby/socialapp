@@ -72,7 +72,7 @@ const RightBar = () => {
         </div>
         <div className="menu">
           <span>Online Friends</span>
-          {userData.followers ?
+          {userData.followers.length >= 1 ?
             userData.followers?.map((item, ke) =>
               <div className="user" key={ke}>
                 <div className="user_info">

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
@@ -7,16 +7,19 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link } from 'react-router-dom';
 import Comments from './../comments/Comments';
 import { AuthContext } from '../../context/authContext';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Post = ({ post }) => {
 
-  const [liked, setLiked] = useState(false)
   const [menuTogle, setMenuTogle] = useState(false)
   const [commentTogle, setCommentTogle] = useState(false);
   const { userData } = useContext(AuthContext)
   const singlePostDocument = doc(db, "posts", post.documentId);
+  const likesRef = doc(collection(db, "posts", post.documentId, "likes"));
+  const likesCollection = collection(db, "posts", post.documentId, "likes");
+  const [liked, setLiked] = useState(null)
+
 
 
   const deletePost = async () => {
@@ -30,6 +33,43 @@ const Post = ({ post }) => {
       console.log(err.message);
     }
   };
+
+  const getLikes = async () => {
+    try {
+      const q = collection(db, "posts", post.documentId, "likes");
+      await onSnapshot(q, (doc) => {
+        setLiked(doc.docs.map((item) => item.data()))
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const handleLike = async () => {
+    const q = query(likesCollection, where("uid", "==", userData?.uid));
+    const querySnapshot = await getDocs(q);
+    const likesDocId = await querySnapshot?.docs[0]?.id;
+    try {
+      if (likesDocId !== undefined) {
+        const deleteId = doc(db, "posts", post.documentId, "likes", likesDocId);
+        await deleteDoc(deleteId);
+      }
+      else {
+        await setDoc(likesRef, {
+          name: userData?.name,
+          uid: userData?.uid,
+        });
+      }
+    } catch (err) {
+      alert(err.message);
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getLikes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='post'>
@@ -60,12 +100,24 @@ const Post = ({ post }) => {
         </div>
         <div onClick={() => setMenuTogle(false)} className="content">
           <p>{post.desc}</p>
-          <img onDoubleClick={() => setLiked(!liked)} src={post.img} alt="" />
+          <img onDoubleClick={handleLike} src={post.img} alt="" />
         </div>
         <div className="info" onClick={() => setMenuTogle(false)}>
           <div className="item">
-            {liked ? <FavoriteOutlinedIcon style={{ color: '#5271ff' }} onClick={() => setLiked(!liked)} /> : <FavoriteBorderOutlinedIcon onClick={() => setLiked(!liked)} />}
-            120 Likes
+            {liked ?
+              <FavoriteOutlinedIcon style={{ color: '#5271ff' }} onClick={handleLike} />
+              :
+              <FavoriteBorderOutlinedIcon onClick={handleLike} />}
+            <span className='like'>
+              {liked?.length > 0 && liked?.length}
+              <div className="user_like">
+                {liked?.map((item) =>
+                <Link to={`/socialapp/profile/${post.uid}`}>
+                  <span>{item.name}</span>
+                </Link>
+                )}
+              </div>
+            </span>
           </div>
           <div className="item" onClick={() => setCommentTogle(!commentTogle)}>
             <TextsmsOutlinedIcon />
