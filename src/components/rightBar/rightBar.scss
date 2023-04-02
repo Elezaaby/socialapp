@@ -100,6 +100,12 @@
             }
           }
         }
+
+        .no_follow {
+          margin: 20px 0px;
+          font-weight: 500;
+          color: themed("textColor");
+        }
       }
 
     }

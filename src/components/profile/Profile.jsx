@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './profile.scss'
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -12,14 +12,28 @@ import { Link, useParams } from 'react-router-dom';
 import Post from './../posts/Post';
 import { useState } from 'react';
 import { collection, where, query, onSnapshot, orderBy } from "firebase/firestore";
+
 import { db } from '../../firebase';
+import { AuthContext } from '../../context/authContext';
+import AddPost from './../addPost/AddPost';
+import { FollowUserContext } from '../../context/followUserContext';
 
 
 const Profile = () => {
 
   const { usrId } = useParams();
+  const { userData } = useContext(AuthContext)
+  const { followUser, unFollowedUser } = useContext(FollowUserContext)
   const [profileData, setProfileData] = useState(null);
   const [postsUoser, setPostsUoser] = useState(null);
+  const [unfollowed, setUnfollowed] = useState(null);
+
+
+  const fro = () => {
+    userData.followers?.map((item) => item.uid === usrId && (
+      setUnfollowed(item)
+    ))
+  }
 
   useEffect(() => {
     window.scrollTo({ behavior: 'smooth', top: 0 })
@@ -39,7 +53,10 @@ const Profile = () => {
     };
     getUserProfile();
     getPostsUser()
-  }, [usrId])
+    setUnfollowed(null)
+    fro()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usrId, userData.followers])
 
   return (
     <div className='profile'>
@@ -75,7 +92,13 @@ const Profile = () => {
                 <span>{profileData?.userName}</span>
               </div>
             </div>
-            <button>follow</button>
+            {unfollowed ?
+              <button onClick={() => unFollowedUser(usrId, profileData.profileImg, profileData.name)} className='unfollowed'>unfollowed</button>
+              :
+              userData?.uid !== usrId ?
+                <button onClick={() => followUser(usrId, profileData.profileImg, profileData.name)} >follower</button>
+                : ""
+            }
           </div>
           <div className="right">
             <EmailOutlinedIcon />
@@ -83,14 +106,20 @@ const Profile = () => {
           </div>
         </div>
 
+        {userData?.uid === usrId && <AddPost />}
+
         <div className='posts'>
-          {postsUoser?.map((post, ke) => (
-            <Post post={post} key={ke} />
-          ))}
+          {postsUoser?.length >= 1 ?
+            postsUoser?.map((post, ke) => (
+              <Post post={post} key={ke} />
+            ))
+            :
+            <div className='no_posts'>There are no posts for this account</div>
+          }
         </div>
 
       </div>
-    </div>
+    </div >
   )
 }
 
