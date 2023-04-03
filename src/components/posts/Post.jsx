@@ -9,17 +9,18 @@ import Comments from './../comments/Comments';
 import { AuthContext } from '../../context/authContext';
 import { collection, deleteDoc, doc, getDocs, onSnapshot, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { PostsContext } from '../../context/postsContext';
 
 const Post = ({ post }) => {
 
   const [menuTogle, setMenuTogle] = useState(false)
   const [commentTogle, setCommentTogle] = useState(false);
   const { userData } = useContext(AuthContext)
+  const { commentsArray } = useContext(PostsContext)
   const singlePostDocument = doc(db, "posts", post.documentId);
   const likesRef = doc(collection(db, "posts", post.documentId, "likes"));
   const likesCollection = collection(db, "posts", post.documentId, "likes");
   const [liked, setLiked] = useState(null)
-
 
 
   const deletePost = async () => {
@@ -111,24 +112,24 @@ const Post = ({ post }) => {
             <span className='like'>
               {liked?.length > 0 && liked?.length}
               <div className="user_like">
-                {liked?.map((item) =>
-                <Link to={`/socialapp/profile/${post.uid}`}>
-                  <span>{item.name}</span>
-                </Link>
+                {liked?.map((item, ke) =>
+                  <Link key={ke} to={`/socialapp/profile/${post.uid}`}>
+                    <span>{item.name}</span>
+                  </Link>
                 )}
               </div>
             </span>
           </div>
           <div className="item" onClick={() => setCommentTogle(!commentTogle)}>
             <TextsmsOutlinedIcon />
-            10 Comments
+            {commentsArray?.length > 0 && commentsArray?.length}
           </div>
           <div className="item">
             <ShareOutlinedIcon />
             Share
           </div>
         </div>
-        {commentTogle && <Comments />}
+        {commentTogle && <Comments documentId={post.documentId} userUid={post.uid} />}
       </div>
     </div>
   )

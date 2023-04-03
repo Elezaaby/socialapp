@@ -61,6 +61,12 @@
           font-weight: 500;
         }
 
+        .userName {
+          color: themed("border");
+          display: block;
+          font-size: 12px;
+        }
+
         p {
           color: themed("textColorSoft")
         }

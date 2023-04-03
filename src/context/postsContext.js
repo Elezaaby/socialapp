@@ -8,6 +8,7 @@ export const PostsContextProvider = ({ children }) => {
 
   const collectionRef = collection(db, "posts");
   const [postsArray, setPostsArray] = useState([])
+  const [commentsArray, setCommentsArray] = useState([])
   const [imageInput, setImageInput] = useState(null);
   const [progressBar, setProgressBar] = useState(100);
   const [image, setImage] = useState(null);
@@ -28,9 +29,20 @@ export const PostsContextProvider = ({ children }) => {
   };
 
 
+  const getComments = async (postId) => {
+    try {
+      const collectionOfComments = collection(db, `posts/${postId}/comments`);
+      const q = query(collectionOfComments, orderBy("timestamp", "desc"));
+      await onSnapshot(q, (doc) => {
+        setCommentsArray(doc.docs?.map((item) => item.data()))
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
-    <PostsContext.Provider value={{ postsArray, getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage }}>
+    <PostsContext.Provider value={{ postsArray, getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage, getComments, commentsArray }}>
       {children}
     </PostsContext.Provider>
   )
