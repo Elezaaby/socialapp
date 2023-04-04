@@ -17,6 +17,7 @@ import { db } from '../../firebase';
 import { AuthContext } from '../../context/authContext';
 import AddPost from './../addPost/AddPost';
 import { FollowUserContext } from '../../context/followUserContext';
+import { PostsContext } from '../../context/postsContext';
 
 
 const Profile = () => {
@@ -27,6 +28,8 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [postsUoser, setPostsUoser] = useState(null);
   const [unfollowed, setUnfollowed] = useState(null);
+  const { setSearchToggle } = useContext(PostsContext)
+
 
 
   const fro = () => {
@@ -37,6 +40,7 @@ const Profile = () => {
 
   useEffect(() => {
     window.scrollTo({ behavior: 'smooth', top: 0 })
+    setSearchToggle(false)
 
     const getUserProfile = async () => {
       const q = query(collection(db, "users"), where("uid", "==", usrId));

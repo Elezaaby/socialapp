@@ -1,0 +1,74 @@
+@import '../../App.scss';
+
+.search_container {
+  @include themify($themes) {
+    width: 500px;
+    background-color: themed('bg');
+    border: 1px solid themed('border');
+    border-radius: 5px;
+    padding: 20px;
+    position: absolute;
+    left: 300px;
+    top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+
+    @include mobile {
+      left: 10px;
+      width: 85%;
+    }
+
+
+    input {
+      border: none;
+      width: 95%;
+      outline: none;
+      background-color: transparent;
+      color: themed("textColor");
+      padding: 10px;
+      display: none;
+
+      @include mobile {
+        display: block;
+      }
+    }
+
+    .user {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+
+        img {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          object-fit: cover;
+          cursor: pointer;
+        }
+
+        span {
+          font-weight: 500;
+          font-size: 18px;
+          color: themed("textColor");
+        }
+
+        .userName {
+          color: themed("textColorSoft");
+          display: block;
+          font-size: 13px;
+        }
+
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ export const PostsContextProvider = ({ children }) => {
   const [imageInput, setImageInput] = useState(null);
   const [progressBar, setProgressBar] = useState(100);
   const [image, setImage] = useState(null);
+  const [searchToggle, setSearchToggle] = useState(false)
 
   useEffect(() => {
     getPosts()
@@ -42,7 +43,7 @@ export const PostsContextProvider = ({ children }) => {
   };
 
   return (
-    <PostsContext.Provider value={{ postsArray, getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage, getComments, commentsArray }}>
+    <PostsContext.Provider value={{ postsArray, getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage, getComments, commentsArray, setSearchToggle, searchToggle }}>
       {children}
     </PostsContext.Provider>
   )

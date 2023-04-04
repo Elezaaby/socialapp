@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './navbar.scss'
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -11,12 +11,16 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from 'react-router-dom';
 import { AuthContext } from './../../context/authContext';
 import { ModeContext } from '../../context/modeContext';
+import Search from '../search/Search';
+import { PostsContext } from './../../context/postsContext';
 
 
 const Navbar = () => {
 
   const { userData, logOutUser } = useContext(AuthContext)
   const { toggle, pageMode } = useContext(ModeContext)
+  const { setSearchToggle, searchToggle } = useContext(PostsContext)
+  const [inputSearch, setInputSearch] = useState('')
 
 
   return (
@@ -35,9 +39,10 @@ const Navbar = () => {
         )}
         <GridViewOutlinedIcon />
         <div className="search">
-          <SearchOutlinedIcon />
-          <input type='text' placeholder='search' />
+          <SearchOutlinedIcon onClick={() => setSearchToggle(!searchToggle)} />
+          <input onClick={() => setSearchToggle(!searchToggle)} onChange={(e) => setInputSearch(e.target.value)} type='text' placeholder='search' />
         </div>
+        {searchToggle && <Search inputSearch={inputSearch} setInputSearch={setInputSearch} />}
       </div>
       <div className="right">
         <Link to={`/socialapp/profile/${userData.uid}`}>
