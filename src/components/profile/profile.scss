@@ -61,23 +61,43 @@
 
         .left {
           flex: 1;
-          display: flex;
-          gap: 10px;
 
-          @include tablet {
-            flex-wrap: wrap;
+          .link {
+            display: flex;
+            gap: 10px;
+
+            @include tablet {
+              flex-wrap: wrap;
+            }
+
+            @include mobile {
+              flex: 0;
+            }
+
+            a {
+              color: themed('textColorSoft');
+              transition: all 0.5s;
+
+              &:hover {
+                color: #000518;
+              }
+            }
           }
 
-          @include mobile {
-            flex: 0;
-          }
+          .follow {
+            display: flex;
+            gap: 50px;
+            margin-top: 10px;
 
-          a {
-            color: themed('textColorSoft');
-            transition: all 0.5s;
+            span {
+              text-transform: capitalize;
+              font-weight: 500;
+              cursor: pointer;
+              transition: all 0.5s;
 
-            &:hover {
-              color: #5271ff;
+              &:hover {
+                color: themed('border');
+              }
             }
           }
         }

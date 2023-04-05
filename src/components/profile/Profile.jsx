@@ -18,24 +18,38 @@ import { AuthContext } from '../../context/authContext';
 import AddPost from './../addPost/AddPost';
 import { FollowUserContext } from '../../context/followUserContext';
 import { PostsContext } from '../../context/postsContext';
+import { UsersContext } from './../../context/usersContext';
+import Follower from '../follower/Follower';
 
 
 const Profile = () => {
 
   const { usrId } = useParams();
   const { userData } = useContext(AuthContext)
-  const { followUser, unFollowedUser } = useContext(FollowUserContext)
+  const { users } = useContext(UsersContext)
+  const { followUser, unFollowedUser, handelFollowers, unFollowersUser } = useContext(FollowUserContext)
+  const [toggleModel, setToggleModel] = useState(false)
+  const [toggleProps, setToggleProps] = useState('')
   const [profileData, setProfileData] = useState(null);
   const [postsUoser, setPostsUoser] = useState(null);
-  const [unfollowed, setUnfollowed] = useState(null);
+  const [unfollow, setUnfollow] = useState(null);
   const { setSearchToggle } = useContext(PostsContext)
 
 
 
   const fro = () => {
-    userData.followers?.map((item) => item.uid === usrId && (
-      setUnfollowed(item)
+    userData.following?.map((item) => item.uid === usrId && (
+      setUnfollow(item)
     ))
+  }
+
+  const handelfollowClick = () => {
+    followUser(usrId, profileData.profileImg, profileData.name)
+    handelFollowers(userData?.uid, userData?.profileImg, userData?.name, usrId)
+  }
+  const handelUnFollowClick = () => {
+    unFollowedUser(usrId, profileData.profileImg, profileData.name)
+    unFollowersUser(userData?.uid, userData?.profileImg, userData?.name, usrId)
   }
 
   useEffect(() => {
@@ -57,11 +71,21 @@ const Profile = () => {
     };
     getUserProfile();
     getPostsUser()
-    setUnfollowed(null)
+    setUnfollow(null)
+    setToggleModel(false)
+    setToggleProps('')
     fro()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usrId, userData.followers])
+  }, [usrId, userData.following])
 
+  const handelModelFollowing = () => {
+    setToggleModel(true)
+    setToggleProps('following')
+  }
+  const handelModelFollowers = () => {
+    setToggleModel(true)
+    setToggleProps('followers')
+  }
   return (
     <div className='profile'>
       <div className="images">
@@ -71,18 +95,24 @@ const Profile = () => {
       <div className="profile_container">
         <div className="user_profile_info">
           <div className="left">
-            <Link to="http://facebook.com" target='_blank'>
-              <FacebookTwoToneIcon />
-            </Link>
-            <Link to="https://www.instagram.com" target='_blank'>
-              <InstagramIcon />
-            </Link>
-            <Link to="https://twitter.com" target='_blank'>
-              <TwitterIcon />
-            </Link>
-            <Link to="https://www.linkedin.com" target='_blank'>
-              <LinkedInIcon />
-            </Link>
+            <div className="link">
+              <Link to="http://facebook.com" target='_blank'>
+                <FacebookTwoToneIcon />
+              </Link>
+              <Link to="https://www.instagram.com" target='_blank'>
+                <InstagramIcon />
+              </Link>
+              <Link to="https://twitter.com" target='_blank'>
+                <TwitterIcon />
+              </Link>
+              <Link to="https://www.linkedin.com" target='_blank'>
+                <LinkedInIcon />
+              </Link>
+            </div>
+            <div className="follow">
+              {users?.map((item) => item.uid === usrId && (<span onClick={handelModelFollowing} >{item.following?.length} following</span>))}
+              {users?.map((item) => item.uid === usrId && (<span onClick={handelModelFollowers}>{item.followers?.length} followers</span>))}
+            </div>
           </div>
           <div className="center">
             <span>{profileData?.name}</span>
@@ -96,11 +126,11 @@ const Profile = () => {
                 <span>{profileData?.userName}</span>
               </div>
             </div>
-            {unfollowed ?
-              <button onClick={() => unFollowedUser(usrId, profileData.profileImg, profileData.name)} className='unfollowed'>unfollowed</button>
+            {unfollow ?
+              <button onClick={handelUnFollowClick} className='unfollowed'>unfollow</button>
               :
               userData?.uid !== usrId ?
-                <button onClick={() => followUser(usrId, profileData.profileImg, profileData.name)} >follower</button>
+                <button onClick={handelfollowClick} >follow</button>
                 : ""
             }
           </div>
@@ -109,6 +139,8 @@ const Profile = () => {
             <MoreVertIcon />
           </div>
         </div>
+
+        {toggleModel && <Follower setToggleModel={setToggleModel} usrId={usrId} toggleProps={toggleProps} />}
 
         {userData?.uid === usrId && <AddPost />}
 
