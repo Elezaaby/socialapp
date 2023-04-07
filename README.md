@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+## .preview home page Light mode
+![home page Light mode](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2Flight%20mode.png?alt=media&token=295f3abb-4fde-4313-8cf8-35658a951e8c)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## .preview home page Dark mode
+![home page Dark mode](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2FDark%20mode.png?alt=media&token=9b5f45a4-faf1-44c4-9bca-9485dbbdbb3d)
 
-## Available Scripts
+## .preview Login page
+![Login page](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2Flogin.png?alt=media&token=c6ad92b8-74be-4b1c-8a72-f7c2d0ad3e28)
 
-In the project directory, you can run:
 
-### `npm start`
+## .preview Register page
+![Register page](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2Fregister.png?alt=media&token=69e4c22e-5a21-4d96-8907-321d1f558fcb)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## .preview Profile page
+![Profile page](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2Fprofile.png?alt=media&token=cf46c330-8d98-42b2-a07e-f722411447bc)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## .features
+- [x] register account
+- [x] Login account
+- [x] View home page
+- [x] Light mode and dark mode
+- [x] Add new text post
+- [x] Add new image post
+- [x] Delete post
+- [ ] Edit task
+- [x] Save on firebase
+- [ ] Show message
+- [x] Responsivity
+- [x] View profile
+- [x] Follow more friends
+- [x] View what your friends are following
+- [x] Search for friends
+- [x] Follow more friends
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## .tools
+- Sass Framework : [Sass](https://sass-lang.com/)
+- react router dom Framework : [React Router Dom](https://reactrouter.com/en/main)
+- Firebase Framework : [Firebase](https://firebase.google.com/)
+- material icons Framework: [Material](https://mui.com/material-ui/material-icons/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## .contact
+- Email: [dev.mahmodalezaby@gmail.com](mailto:dev.mahmodalezaby@gmail.com)
+- Instagram: [@mahmoud_elezaaby](https://instagram.com/mahmoud_elezaaby)
+- Linkedin: [@mahmoud-elezaby](https://www.linkedin.com/in/mahmoud-elezaby/)
