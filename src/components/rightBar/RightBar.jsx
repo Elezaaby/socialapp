@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/authContext'
 const RightBar = () => {
 
   const { users } = useContext(UsersContext)
-  const { userData } = useContext(AuthContext)
+  const { userData, avtar } = useContext(AuthContext)
   return (
     <div className='rightBar'>
       <div className="container">
@@ -16,7 +16,7 @@ const RightBar = () => {
           {users?.map((user, ke) => ke <= 2 && (
             <div className="user" key={ke}>
               <Link to={`/socialapp/profile/${user.uid}`} style={{ textDecoration: 'none' }} className="user_info">
-                <img src={user.profileImg} alt="" />
+                <img src={user.profileImg || avtar} alt="" />
                 <span>{user.name}</span>
               </Link>
               <div className="btn">
@@ -77,7 +77,7 @@ const RightBar = () => {
               <div className="user" key={ke}>
                 <div className="user_info">
                   <img
-                    src={item.profileImg}
+                    src={item.profileImg || avtar}
                     alt=""
                   />
                   <div className="online" />

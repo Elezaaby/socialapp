@@ -19,14 +19,14 @@ import Fund from "../../assets/fundraiser.png";
 import { Link } from 'react-router-dom';
 
 const LeftBar = () => {
-  const { userData } = useContext(AuthContext)
+  const { userData, avtar } = useContext(AuthContext)
 
   return (
     <div className='leftBar'>
       <div className="container">
         <div className="menu">
           <Link to={`/socialapp/profile/${userData.uid}`} className="user_info">
-            <img src={userData.profileImg} alt="" />
+            <img src={userData.profileImg || avtar} alt="" />
             <span>{userData.name}</span>
           </Link>
           <div className="item">

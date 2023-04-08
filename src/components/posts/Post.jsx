@@ -15,7 +15,7 @@ const Post = ({ post }) => {
 
   const [menuTogle, setMenuTogle] = useState(false)
   const [commentTogle, setCommentTogle] = useState(false);
-  const { userData } = useContext(AuthContext)
+  const { userData, avtar } = useContext(AuthContext)
   const { commentsArray } = useContext(PostsContext)
   const singlePostDocument = doc(db, "posts", post.documentId);
   const likesRef = doc(collection(db, "posts", post.documentId, "likes"));
@@ -78,7 +78,7 @@ const Post = ({ post }) => {
         <div className="user">
           <div className="user_info">
             <Link to={`/socialapp/profile/${post.uid}`}>
-              <img src={post.profilePic} alt="" />
+              <img src={post.profilePic || avtar} alt="" />
             </Link>
             <div className="details">
               <Link to={`/socialapp/profile/${post.uid}`}>

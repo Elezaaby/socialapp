@@ -5,7 +5,7 @@ import Storie from './Storie';
 
 const Stories = () => {
 
-  const { userData } = useContext(AuthContext)
+  const { userData,avtar } = useContext(AuthContext)
 
   ////////////////////////// Temporary //////////////////////////////
   const stories = [
@@ -35,7 +35,7 @@ const Stories = () => {
   return (
     <div className='stories'>
       <div className="storie">
-        <img src={userData.profileImg} alt="" />
+        <img src={userData.profileImg || avtar} alt="" />
         <button>+</button>
       </div>
       {stories.map((storieItem, ke) => (

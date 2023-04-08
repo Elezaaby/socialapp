@@ -11,7 +11,7 @@ import Map from "../../assets/map.png";
 
 
 const AddPost = () => {
-  const { userData, user } = useContext(AuthContext)
+  const { userData, user, avtar } = useContext(AuthContext)
   const { getPosts, imageInput, setImageInput, progressBar, setProgressBar, image, setImage } = useContext(PostsContext)
   const postRef = doc(collection(db, "posts"));
   const storage = getStorage();
@@ -103,7 +103,7 @@ const AddPost = () => {
       <div className="top">
         <div className="input">
           <div className="user">
-            <img src={userData.profileImg} alt="" />
+            <img src={userData.profileImg || avtar} alt="" />
           </div>
           <form onSubmit={handleSubmitPost} className="inputP">
             <input ref={inputText} type="text" placeholder={`What's on your mind ${userData.name}?`} />

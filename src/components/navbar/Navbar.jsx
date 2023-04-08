@@ -17,7 +17,7 @@ import { PostsContext } from './../../context/postsContext';
 
 const Navbar = () => {
 
-  const { userData, logOutUser } = useContext(AuthContext)
+  const { userData, logOutUser, avtar } = useContext(AuthContext)
   const { toggle, pageMode } = useContext(ModeContext)
   const { setSearchToggle, searchToggle } = useContext(PostsContext)
   const [inputSearch, setInputSearch] = useState('')
@@ -52,7 +52,7 @@ const Navbar = () => {
         <NotificationsOutlinedIcon />
         <Link to={`/socialapp/profile/${userData.uid}`}>
           <div className="user_info">
-            <img src={userData.profileImg} alt="" />
+            <img src={userData.profileImg || avtar} alt="" />
             <span>{userData.name}</span>
           </div>
         </Link>

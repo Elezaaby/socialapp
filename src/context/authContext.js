@@ -10,6 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   const [userData, setUserData] = useState()
   const [user, setUser] = useState()
   const collectionUserRef = collection(db, 'users')
+  const avtar = 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331257__340.png'
   let navigate = useNavigate()
 
 
@@ -80,7 +81,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ userData, loginWithEmailAndPassword, registerWithEmailAndPassword, logOutUser }}>
+    <AuthContext.Provider value={{ userData, loginWithEmailAndPassword, registerWithEmailAndPassword, logOutUser,avtar }}>
       {children}
     </AuthContext.Provider>
   )

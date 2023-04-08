@@ -8,10 +8,11 @@ import PlaceIcon from "@mui/icons-material/Place";
 import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { CameraAltOutlined } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
 import Post from './../posts/Post';
 import { useState } from 'react';
-import { collection, where, query, onSnapshot, orderBy } from "firebase/firestore";
+import { collection, where, query, onSnapshot, orderBy, updateDoc, getDocs } from "firebase/firestore";
 
 import { db } from '../../firebase';
 import { AuthContext } from '../../context/authContext';
@@ -20,12 +21,13 @@ import { FollowUserContext } from '../../context/followUserContext';
 import { PostsContext } from '../../context/postsContext';
 import { UsersContext } from './../../context/usersContext';
 import Follower from '../follower/Follower';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
 
 const Profile = () => {
 
   const { usrId } = useParams();
-  const { userData } = useContext(AuthContext)
+  const { userData, avtar } = useContext(AuthContext)
   const { users } = useContext(UsersContext)
   const { followUser, unFollowedUser, handelFollowers, unFollowersUser } = useContext(FollowUserContext)
   const [toggleModel, setToggleModel] = useState(false)
@@ -33,7 +35,13 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [postsUoser, setPostsUoser] = useState(null);
   const [unfollow, setUnfollow] = useState(null);
+  const [imageUpdate, setImageUpdate] = useState(null);
+  const [progressBar, setProgressBar] = useState(null);
+  const collectionUserRef = collection(db, 'users')
   const { setSearchToggle } = useContext(PostsContext)
+  const storage = getStorage();
+
+
 
 
 
@@ -75,8 +83,9 @@ const Profile = () => {
     setToggleModel(false)
     setToggleProps('')
     fro()
+    submitImage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usrId, userData.following])
+  }, [usrId, userData.following, imageUpdate?.name])
 
   const handelModelFollowing = () => {
     setToggleModel(true)
@@ -86,11 +95,74 @@ const Profile = () => {
     setToggleModel(true)
     setToggleProps('followers')
   }
+
+  const metadata = {
+    contentType: [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+      "image/svg+xml",
+    ],
+  };
+
+  const submitImage = async () => {
+    const fileType = imageUpdate && metadata.contentType.includes(imageUpdate["type"]);
+    if (!imageUpdate) return;
+    if (fileType) {
+      try {
+        const storageRef = ref(storage, `profileImages/${imageUpdate.name}${userData.uid}`);
+        const uploadTask = uploadBytesResumable(
+          storageRef,
+          imageUpdate,
+          metadata.contentType
+        );
+        await uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgressBar(progress);
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              async (downloadURL) => {
+                const q = query(collectionUserRef, where("uid", "==", userData?.uid))
+                const doc = await getDocs(q);
+                const data = doc.docs[0].ref;
+                await updateDoc(data, {
+                  "profileImg": downloadURL
+                });
+                setImageUpdate(null)
+                setProgressBar(0)
+              }
+            );
+          }
+        );
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  };
+
+
   return (
     <div className='profile'>
       <div className="images">
         <img src={profileData?.coverImg} alt="" className="cover" />
-        <img src={profileData?.profileImg} alt="" className="profile_img" />
+        <div className="profile_img">
+          <img src={profileData?.profileImg || avtar} alt="" />
+          {userData?.uid === usrId &&
+            <label className="update_img" htmlFor='updateImage'>
+              <input type="file" id="updateImage" onChange={(e) => setImageUpdate(e.target.files[0])} style={{ display: "none" }} />
+              <CameraAltOutlined />
+            </label>
+          }
+        </div>
       </div>
       <div className="profile_container">
         <div className="user_profile_info">
@@ -110,8 +182,8 @@ const Profile = () => {
               </Link>
             </div>
             <div className="follow">
-              {users?.map((item) => item.uid === usrId && (<span onClick={handelModelFollowing} >{item.following?.length} following</span>))}
-              {users?.map((item) => item.uid === usrId && (<span onClick={handelModelFollowers}>{item.followers?.length} followers</span>))}
+              {users?.map((item, ke) => item.uid === usrId && (<span key={ke} onClick={handelModelFollowing} >{item.following?.length} following</span>))}
+              {users?.map((item, ke) => item.uid === usrId && (<span key={ke} onClick={handelModelFollowers}>{item.followers?.length} followers</span>))}
             </div>
           </div>
           <div className="center">
