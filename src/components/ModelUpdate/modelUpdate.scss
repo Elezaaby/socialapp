@@ -1,0 +1,120 @@
+@import '../../App.scss';
+
+.update_name {
+  @include themify($themes) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, .20);
+    backdrop-filter: blur(3px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+
+
+    .close {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .container {
+      z-index: 1000;
+      width: 30%;
+      height: 400px;
+      position: relative;
+      border-radius: 10px;
+      max-height: 750px;
+      padding: 30px;
+      background-color: themed("bg");
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+
+      .profile_img {
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        img {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .update_img {
+          position: absolute;
+          top: 130px;
+          left: 50%;
+          background-color: rgba(0, 0, 0, 0.38);
+          height: 100px;
+          width: 200px;
+          transform: translate(-50%);
+          border-end-end-radius: 100px;
+          border-bottom-left-radius: 100px;
+          display: none;
+          transition: all 0.5s;
+          cursor: pointer;
+
+
+          svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: #eee;
+          }
+        }
+
+        &:hover {
+          .update_img {
+            display: block;
+          }
+        }
+      }
+
+      input {
+        border: none;
+        border-bottom: 1px solid lightgray;
+        padding: 10px;
+        outline: none;
+        font-size: 16px;
+        background-color: themed("bgSoft");
+        color: themed("textColor");
+        border-radius: 10px;
+      }
+
+      .progressBar {
+        height: 3px;
+        background-color: #5271ff;
+      }
+
+
+      button {
+        background-color: #5271ff;
+        width: 40%;
+        margin: auto;
+        border: none;
+        padding: 5px;
+        color: #fff;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      svg {
+        color: themed("textColor");
+        cursor: pointer;
+      }
+
+    }
+  }
+}

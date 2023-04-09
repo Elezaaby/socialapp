@@ -149,6 +149,15 @@
           span {
             font-size: 30px;
             font-weight: 500;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+
+            svg {
+              font-size: 25px;
+              color: #5271ff;
+              cursor: pointer;
+            }
           }
 
           .info {
