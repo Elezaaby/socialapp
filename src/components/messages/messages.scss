@@ -1,0 +1,201 @@
+@import "../../App.scss";
+
+.messages {
+  @include themify($themes) {
+    padding: 40px 70px;
+    background-color: themed("bgSoft");
+    overflow: scroll;
+    color: themed("textColor");
+    display: flex;
+    gap: 30px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include mobile {
+      padding: 10px;
+    }
+
+    @include tablet {
+      padding: 20px;
+    }
+
+    .container_message {
+      flex: 2;
+
+      .message {
+        .menu {
+          -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+          -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+          box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+          padding: 10px;
+          margin-bottom: 10px;
+          background-color: themed("bg");
+          border-radius: 20px;
+
+          .user {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .user_info {
+              display: flex;
+              align-items: center;
+              gap: 20px;
+              position: relative;
+
+              img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+              }
+
+
+              .online {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: limegreen;
+                position: absolute;
+                top: 0;
+                left: 30px;
+              }
+
+              p {
+                color: themed("textColorSoft");
+              }
+
+              span {
+                font-weight: 500;
+                color: themed("textColor");
+              }
+
+            }
+          }
+        }
+      }
+    }
+
+    .message_details {
+      flex: 4;
+      padding: 0 20px;
+      background-color: themed("bg");
+      border-radius: 10px;
+      overflow-y: scroll;
+      height: calc(100vh - 140px);
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .user_info {
+        height: 40px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: themed('bg');
+        border-bottom: 1px solid themed('border');
+        color: themed('textColor');
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+        .user {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 15px;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+          }
+
+
+          .online {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: limegreen;
+            position: absolute;
+            top: 5px;
+            left: 45px;
+          }
+
+          p {
+            color: themed("textColorSoft");
+          }
+
+          span {
+            font-weight: 500;
+            color: themed("textColor");
+          }
+
+        }
+      }
+
+
+      .chat {
+        padding: 20px 10px;
+        height: calc(100vh - 310px);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .left_message {
+          display: flex;
+          justify-content: flex-end;
+
+          .message_text {
+            border-radius: 20px;
+            padding: 10px;
+            width: 50%;
+            background-color: aqua;
+          }
+        }
+
+        .right_message {
+          display: flex;
+          justify-content: flex-start;
+
+          .message_text {
+            border-radius: 20px;
+            padding: 10px;
+            width: 50%;
+            background-color: aquamarine;
+          }
+        }
+      }
+
+      .input_message {
+        height: 40px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: themed('bg');
+        border-top: 1px solid themed('border');
+        color: themed('textColor');
+        position: sticky;
+        bottom: -1px;
+        z-index: 1000;
+
+        input {
+          border: none;
+          background-color: transparent;
+          width: 100%;
+          outline: none;
+          padding: 10px;
+          color: themed('textColor');
+        }
+      }
+    }
+  }
+}

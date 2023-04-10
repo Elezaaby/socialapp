@@ -76,6 +76,9 @@
           align-items: center;
           gap: 10px;
           cursor: pointer;
+          text-decoration: none;
+          color: themed("textColor");
+
 
           img {
             width: 30px;

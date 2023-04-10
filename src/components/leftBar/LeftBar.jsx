@@ -69,10 +69,10 @@ const LeftBar = () => {
             <img src={Videos} alt="" />
             <span>Videos</span>
           </div>
-          <div className="item">
+          <Link to='/socialapp/messages' className="item">
             <img src={Messages} alt="" />
             <span>Messages</span>
-          </div>
+          </Link>
         </div>
         <hr />
         <div className="menu">
