@@ -27,6 +27,41 @@ const MessageDetails = () => {
             test maessag
           </div>
         </div>
+        <div className="left_message">
+          <div className="message_text">
+            test maessag
+          </div>
+        </div>
+        <div className="right_message">
+          <div className="message_text">
+            test maessag2
+          </div>
+        </div>
+        <div className="left_message">
+          <div className="message_text">
+            test maessag
+          </div>
+        </div>
+        <div className="right_message">
+          <div className="message_text">
+            test maessag2
+          </div>
+        </div>
+        <div className="left_message">
+          <div className="message_text">
+            test maessag
+          </div>
+        </div>
+        <div className="right_message">
+          <div className="message_text">
+            test maessag2
+          </div>
+        </div>
+        <div className="left_message">
+          <div className="message_text">
+            test maessag
+          </div>
+        </div>
         <div className="right_message">
           <div className="message_text">
             test maessag2

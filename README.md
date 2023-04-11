@@ -15,6 +15,9 @@
 ## .preview Profile page
 ![Profile page](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2Fprofile.png?alt=media&token=cf46c330-8d98-42b2-a07e-f722411447bc)
 
+## .preview Messages page
+![Messages page](https://firebasestorage.googleapis.com/v0/b/socialapp-c44c3.appspot.com/o/socialapp%2Fmessages.png?alt=media&token=28f31c59-2e66-413e-8757-a4669ef9b0b3)
+
 
 ## .features
 - [x] register account
@@ -26,7 +29,7 @@
 - [x] Delete post
 - [ ] Edit task
 - [x] Save on firebase
-- [ ] Show message
+- [x] Show message
 - [x] Responsivity
 - [x] View profile
 - [x] Follow more friends
